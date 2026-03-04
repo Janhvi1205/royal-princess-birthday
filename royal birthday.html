@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Princess Birthday Surprise</title>
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(to right,#d2afee,#e5a1f3,#24243e);
+  text-align:center;
+  font-family:'Dancing Script', cursive;
+  color:white;
+  overflow:hidden;
+}
+
+/* INTRO */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:linear-gradient(to right,#d364a8,#e3e4b2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+#main{
+  display:none;
+  margin-top:60px;
+}
+
+/* CARD */
+.card{
+  margin:auto;
+}
+
+/* IMAGES */
+img{
+  width:200px;
+  height:200px;
+  border-radius:20px;
+  margin:10px;
+  object-fit:cover;
+}
+
+/* BUTTON */
+button{
+  padding:14px 30px;
+  margin-top:30px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:18px;
+  background:linear-gradient(45deg,#ff4dd2,#8f94fb);
+  color:white;
+  box-shadow:0 0 15px #ff4dd2;
+  transition:0.4s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 25px #ff99ff;
+}
+
+/* NEON COUNTDOWN */
+#countdown{
+  font-size:35px;
+  font-weight:bold;
+  margin-top:20px;
+  letter-spacing:3px;
+  color:#00f7ff;
+  text-shadow:
+    0 0 5px #00f7ff,
+    0 0 10px #00f7ff,
+    0 0 20px #00f7ff,
+    0 0 40px #00f7ff;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+  from{
+    text-shadow:0 0 5px #00f7ff;
+  }
+  to{
+    text-shadow:0 0 20px #00f7ff,0 0 40px #00f7ff;
+  }
+}
+
+#letterPage{
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+#letterPage{
+  position:fixed;
+  width:100%;
+  height:100vh;
+  background:linear-gradient(to right,#141e30,#243b55);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+.letterCard{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(15px);
+  padding:40px;
+  border-radius:25px;
+  width:80%;
+  max-width:700px;
+  box-shadow:0 8px 32px rgba(229, 145, 222, 0.884);
+}
+
+.letterContent{
+  max-height:250px;
+  overflow-y:auto;
+  margin-top:20px;
+  line-height:1.7;
+  font-size:18px;
+}
+
+.letterContent::-webkit-scrollbar{
+  width:6px;
+}
+
+.letterContent::-webkit-scrollbar-thumb{
+  background:#f0c8ee;
+  border-radius:10px;
+}
+#slide{
+  transition:1s ease;
+}
+.fade{
+  opacity:0;
+  transform:scale(1.1);
+}
+.introTitle{
+  font-size:50px;
+  letter-spacing:3px;
+  animation: glowText 2s infinite alternate;
+}
+
+.subText{
+  margin-top:15px;
+  font-size:20px;
+  opacity:0.8;
+  animation: fadeInUp 2s ease forwards;
+}
+
+@keyframes glowText{
+  from{ text-shadow:0 0 10px #ff4dd2; }
+  to{ text-shadow:0 0 30px #ff99ff; }
+}
+
+@keyframes fadeInUp{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.heart{
+  position:absolute;
+  color:#ff4dd2;
+  font-size:20px;
+  animation: floatHearts linear infinite;
+}
+
+@keyframes floatHearts{
+  from{
+    transform:translateY(100vh) scale(1);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-10vh) scale(1.5);
+    opacity:0;
+  }
+}
+@keyframes zoomOut{
+  from{
+    transform:scale(1);
+    opacity:1;
+  }
+  to{
+    transform:scale(1.5);
+    opacity:0;
+  }
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1 class="introTitle">💗 A Special Surprise Awaits 💗</h1>
+<p class="subText">Something magical is about to begin ✨</p>
+  <button onclick="enterSite()">Enter 🥰</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="card">
+
+    <h2 id="countdown"></h2>
+    <h1 id="typing"></h1>
+    <p id="message"></p>
+
+    <img id="slide" src="photo1.jpg">
+
+    <br>
+    <button onclick="celebrate()">Celebrate 🎂</button>
+
+  </div>
+</div>
+<div id="letterPage">
+
+  <div class="letterCard">
+    <h1>💌 A Letter From My Heart</h1>
+
+    <div class="letterContent">
+      <p id="letterText"></p>
+    </div>
+
+  </div>
+
+</div>
+
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+    let letterMessage = `Happy Birthday meri princess 👑✨
+
+Aaj ka din roshni se saja hai,
+kyunki is din meri duniya mein tum aayi thi.
+
+Tumhari muskaan chaand se bhi zyada haseen hai,
+aur tumhari aankhon mein meri har khushi chhupi hai.
+
+Rab kare tumhari zindagi phoolon ki tarah mehekti rahe,
+har khwab tumhara haqeeqat banta rahe.
+
+Tum hamesha yunhi hansti, chamakti aur khush raho,
+kyunki meri duaon ka har lafz sirf tumhare liye hai.
+
+Happy Birthday meri sabse khoobsurat princess 💖🎂✨`;
+
+let letterIndex = 0;
+
+function typeLetter(){
+  if(letterIndex < letterMessage.length){
+
+    let char = letterMessage.charAt(letterIndex);
+
+    if(char === "\n"){
+      document.getElementById("letterText").innerHTML += "<br>";
+    } else {
+      document.getElementById("letterText").innerHTML += char;
+    }
+
+    letterIndex++;
+    setTimeout(typeLetter,40);
+  }
+}
+
+
+/* ENTER */
+function enterSite(){
+
+  document.getElementById("intro").style.animation="zoomOut 1s ease forwards";
+
+  setTimeout(function(){
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+    typeWriter();
+    startCountdown();
+  },1000);
+
+  startHearts();
+}
+
+/* TYPING */
+let text="Happy Birthday My Princess 🤞🏻🎂💓";
+let i=0;
+function typeWriter(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeWriter,100);
+  }
+}
+
+/* COUNTDOWN */
+function startCountdown(){
+
+  let birthdayDate = new Date("March 4, 2026 00:00:00").getTime();
+
+  setInterval(function(){
+
+    let now = new Date().getTime();
+    let distance = birthdayDate - now;
+
+    let days = Math.floor(distance/(1000*60*60*24));
+    let hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    let minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+    let seconds = Math.floor((distance%(1000*60))/1000);
+
+    document.getElementById("countdown").innerHTML =
+      days+"D : "+hours+"H : "+minutes+"M : "+seconds+"S";
+
+  },1000);
+
+}
+
+  setInterval(function(){
+  let slide=document.getElementById("slide");
+  slide.classList.add("fade");
+
+  setTimeout(function(){
+    index=(index+1)%images.length;
+    slide.src=images[index];
+    slide.classList.remove("fade");
+  },500);
+
+},3000);
+
+/* SLIDESHOW */
+
+let images=["photo1.jpg","photo2.jpg","photo3.jpg"];
+let index=0;
+
+/* CELEBRATE */
+function celebrate(){
+
+  document.getElementById("main").style.opacity="0";
+
+  setTimeout(function(){
+    document.getElementById("main").style.display="none";
+    document.getElementById("letterPage").style.display="flex";
+    typeLetter();   // yahin se start hoga typing
+  },800);
+
+  document.getElementById("music").play();
+
+  startSparkles();
+}
+
+
+  // music play
+  document.getElementById("music").play();
+
+  // sparkles
+  function startHearts(){
+  setInterval(function(){
+
+    let heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration = (4 + Math.random()*3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(function(){
+      heart.remove();
+    },7000);
+
+  },400);
+}
+  
+</script>
+
+</body>
+</html>
